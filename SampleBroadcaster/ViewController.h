@@ -15,6 +15,12 @@
 {
     std::unique_ptr<videocore::sample::SampleGraph> _sampleGraph;
     NSString *urlString;
+    NSString *strname;
+    NSString *deviceUUID;
+    NSArray *jsonData;
+    NSArray *jsonUrls;
+    NSMutableData *responseData;
+    NSDictionary *dict;
 }
 
 @property (retain, nonatomic) IBOutlet UIButton *btnSpin;

@@ -11,10 +11,14 @@
 @interface MainTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 {
     NSArray * studentData;
-    
+    NSString *urlString;
+    NSMutableData *responseData;
+    NSDictionary *dict;
+    NSArray *jsonData;
+
 }
 
-
+@property (strong, nonatomic) IBOutlet UITableView *tb;
 @property(nonatomic, retain) NSArray * studentData;
 -(void) createData;
 @end

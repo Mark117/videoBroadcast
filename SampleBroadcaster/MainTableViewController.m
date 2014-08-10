@@ -9,7 +9,8 @@
 #import "MainTableViewController.h"
 #import "Person.h"
 #import "WatchTableViewCell.h"
-
+#import "SBJsonBase.h"
+#import "SBJsonParser.h"
 
 @interface MainTableViewController ()
 
@@ -31,29 +32,49 @@
     }
     return self;
 }
+-(void) viewWillAppear{
+    //get active streams from DB
+    NSUserDefaults *sURL = [NSUserDefaults standardUserDefaults];
+    urlString = [sURL stringForKey:@"sURL"];
+    NSString *URLString = [NSString stringWithFormat:@"http://%@:8888/project/selectActive.php", urlString];
+    NSLog(@"URL is: %@", URLString);
+    NSURL *urlJSON = [[NSURL alloc] initWithString:URLString];
+    NSData* data = [NSData dataWithContentsOfURL:urlJSON];
+    
+    NSString *JSONString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+    dict = [jsonParser objectWithString:JSONString error:&error];
+    jsonData = [dict valueForKeyPath:@"streamers"];
+    NSLog(@"JSON DATA IS: %@", jsonData);
+    [self.tb reloadData];
+    //streams have been returned
 
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self createData];
-//
-//    NSURL *url = [NSURL URLWithString:@"http://192.168.1.115:1935/live/myStream/playlist.m3u8"];
-//    NSURLRequest *request = [NSURLRequest requestWithURL: url];
-//    NSHTTPURLResponse *response;
-//    [NSURLConnection sendSynchronousRequest: request returningResponse: &response error: nil];
-//    if ([response respondsToSelector:@selector(allHeaderFields)]) {
-//        NSDictionary *dictionary = [response allHeaderFields];
-//        NSLog(@"Test %@",[dictionary description]);
-//        
-//        //if content-length >= 150 then the stream is active, test next stream/ wowza application name (e.g. live, live2, live3 etc)
-//        //if content-length <= 100 then stream is inactive so broadcast to it.
-//    }
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    //get active streams from DB
+    NSUserDefaults *sURL = [NSUserDefaults standardUserDefaults];
+    urlString = [sURL stringForKey:@"sURL"];
+    NSString *URLString = [NSString stringWithFormat:@"http://%@:8888/project/selectActive.php", urlString];
+    NSLog(@"URL is: %@", URLString);
+    NSURL *urlJSON = [[NSURL alloc] initWithString:URLString];
+    NSData* data = [NSData dataWithContentsOfURL:urlJSON];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSString *JSONString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+    dict = [jsonParser objectWithString:JSONString error:&error];
+    jsonData = [dict valueForKeyPath:@"streamers"];
+    NSLog(@"JSON DATA IS: %@", jsonData);
+    [self.tb reloadData];
+    //streams have been returned
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,16 +87,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return [self.studentData count];
+
+    return [jsonData count];
 }
 
 
@@ -85,19 +104,21 @@
     
     // Configure the cell...
     Person * person = self.studentData[indexPath.row];
+    NSDictionary *localDict=  [jsonData objectAtIndex:indexPath.row];
+    
     //cell.textLabel.text = person.name;
     //cell.imageView.image = [UIImage imageNamed:person.image];
     
     UILabel *nameLabel = (UILabel *)[cell viewWithTag:101];
-    nameLabel.text = person.name;
+    nameLabel.text = [localDict objectForKey:@"sname"];
     
     UILabel *ratingLabel = (UILabel *)[cell viewWithTag:105];
     //get rating for stream named person.name from DB
-    ratingLabel.text = @"+12";
+    ratingLabel.text = [localDict objectForKey:@"rating"];
     
     UIImageView *ratingImageView = (UIImageView *)[cell viewWithTag:102];
     //connect to stream, download frame every 10 seconds, add as user pref?
-    ratingImageView.image = [UIImage imageNamed:person.image];
+    ratingImageView.image = [UIImage imageNamed:@"image.png"];
     
     UIButton *upvote = (UIButton *)[cell viewWithTag:103];
     [upvote addTarget:self action:@selector(upvoteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -111,8 +132,8 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Person * person = self.studentData[indexPath.row];
-    NSLog(@"selected row %@", person.name);
+    NSDictionary *localDict=  [jsonData objectAtIndex:indexPath.row];
+    NSLog(@"selected row %@", [localDict objectForKey:@"sname"]);
 }
 
 -(IBAction)upvoteButtonClicked:(id)sender {

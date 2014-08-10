@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "SBJsonBase.h"
+#import "SBJsonParser.h"
 
 @interface ViewController () <GLKViewDelegate>
 {
@@ -36,8 +38,16 @@
     _spinning = false;
     
     NSUserDefaults *sURL = [NSUserDefaults standardUserDefaults];
-    [sURL setObject:@"192.168.1.16" forKey:@"sURL"];
+    [sURL setObject:@"192.168.1.41" forKey:@"sURL"];
     [sURL synchronize];
+    
+    NSUserDefaults *sname = [NSUserDefaults standardUserDefaults];
+    [sname setObject:@"Mark Horgan" forKey:@"sname"];
+    [sname synchronize];
+    
+    
+   // NSString *deviceName = [[UIDevice currentDevice] name];
+    deviceUUID = [UIDevice currentDevice].identifierForVendor.UUIDString;
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,53 +87,128 @@
     urlString = [sURL stringForKey:@"sURL"];
 
     if([self.btnConnect.titleLabel.text isEqualToString:@"Connect"]) {
+        ////////DO DATABASE WORK - select * from streamer
+        //if range of string is live, use live 2, if live2 use live 3 etc
         
-        NSString* rtmpUrl = [NSString stringWithFormat:@"rtmp://%@:1935/live/myStream", urlString];
-        NSLog(@"rtmp url is: %@", rtmpUrl);
-        [self.btnConnect setTitle:@"Connecting..." forState:UIControlStateNormal];
+        //Load the JSON db results from the server
+        NSString *URLString = [NSString stringWithFormat:@"http://%@:8888/project/select.php", urlString];
+        NSURL *urlJSON = [[NSURL alloc] initWithString:URLString];
+        NSData* data = [NSData dataWithContentsOfURL:urlJSON];
         
-        //test the stream to see which one is active
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1935/live/myStream/playlist.m3u8", urlString]];
-        NSURLRequest *request = [NSURLRequest requestWithURL: url];
-        NSHTTPURLResponse *response;
-        [NSURLConnection sendSynchronousRequest: request returningResponse: &response error: nil];
-        if ([response respondsToSelector:@selector(allHeaderFields)]) {
-            NSDictionary *dictionary = [response allHeaderFields];
-            NSLog(@"Test %@",[dictionary description]);
-            if ([[dictionary objectForKey:@"Content-Length"] intValue] >= 151) {
-                NSLog(@"live is in use, try live2");
-                rtmpUrl = [NSString stringWithFormat:@"rtmp://%@:1935/live2/myStream", urlString];
-            }
-//            } else if ([[dictionary objectForKey:@"Content-Length"] intValue] <=100){
-//                NSLog(@"live is in free to use");
-//            }
+        NSString *JSONString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+        NSError *error = nil;
+        dict = [jsonParser objectWithString:JSONString error:&error];
+        jsonData = [dict valueForKeyPath:@"streamers"];
+        
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for(NSDictionary *data in jsonData){
+            [array addObject:[data objectForKey:@"url"]];
+        }
+        NSString * result = [array componentsJoinedByString:@""];
+       // NSLog(@"jsonData is: %@", array);
+        
+        //cycle through the urls in the DB, find the range of string live part. if range of string is live, use live 2, if live2 use live 3 etc
+        NSRegularExpression *regex =[NSRegularExpression regularExpressionWithPattern:@"\\w\\w\\w\\w\\d" options:0 error:NULL];
+        NSArray *arrayOfAllMatches = [regex matchesInString:result options:0 range:NSMakeRange(0, [result length])];
+        
+        NSMutableArray *arrayOfURLs = [[NSMutableArray alloc] init];
+        
+        for (NSTextCheckingResult *match in arrayOfAllMatches) {
+            NSString* substringForMatch = [result substringWithRange:match.range];
+           // NSLog(@"Extracted URL: %@",substringForMatch);
             
-            //if content-length >= 150 then the stream is active, test next stream/ wowza application name (e.g. live, live2, live3 etc)
-            //if content-length <= 100 then stream is inactive so broadcast to it.
+            [arrayOfURLs addObject:substringForMatch];
         }
         
+        // return non-mutable version of the array
+        //live array is the array of available streams
+        NSMutableArray *liveArray = [[NSMutableArray alloc] init];
+        [liveArray addObject:@"live1"];
+        [liveArray addObject:@"live2"];
+        [liveArray addObject:@"live3"];
+        [liveArray addObject:@"live4"];
+        [liveArray addObject:@"live5"];
+        
+        //the result of the below line of code is the streams available
+        [liveArray removeObjectsInArray:[NSArray arrayWithArray:arrayOfURLs]];
+        
+        NSLog(@"STREAMS AVAILABLE FOR USE: %@", liveArray);
+
+        ////////////END DATABASE WORK
+
+        //select object at index 0 for the url of the stream and Connect to the stream
+        NSString* rtmpUrl = [NSString stringWithFormat:@"rtmp://%@:1935/%@/myStream", urlString, [liveArray objectAtIndex:0]];
+        NSLog(@"CONNECTED TO: %@", [liveArray objectAtIndex:0]);
+        
+        [self.btnConnect setTitle:@"Connecting..." forState:UIControlStateNormal];
         _sampleGraph.reset(new videocore::sample::SampleGraph([self](videocore::sample::SessionState state){
             [self connectionStatusChange:state];
         }));
-    
-        
         _sampleGraph->setPBCallback([=](const uint8_t* const data, size_t size) {
             [self gotPixelBuffer: data withSize: size];
         });
-        
         float scr_w = 720;
         float scr_h = 1280;
+        int bitrate = 500000;
+        int fps = 15;
+        _sampleGraph->startRtmpSession([rtmpUrl UTF8String], scr_w, scr_h, bitrate /* video bitrate */, fps /* video fps */);
         
-        _sampleGraph->startRtmpSession([rtmpUrl UTF8String], scr_w, scr_h, 500000 /* video bitrate */, 15 /* video fps */);
-    }
-    else if ( [self.btnConnect.titleLabel.text isEqualToString:@"Connected"]) {
-        // disconnect
+        ////////DO DATABASE WORK -> upload the sname, uuid, bitrate, fps, url, active, rating
+        int active = 1;
+        int rating = 0;
+        NSUserDefaults *sname = [NSUserDefaults standardUserDefaults];
+        strname = [sname stringForKey:@"sname"];
+     
+        NSString *regString = [NSString stringWithFormat:@"http://%@:8888/project/register.php?sname=%@&uuid=%@&bitrate=%d&fps=%d&url=%@&active=%d&rating=%d", urlString, strname, [UIDevice currentDevice].identifierForVendor.UUIDString, bitrate, fps, rtmpUrl, active, rating];
+        regString = [regString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        NSURL *url = [NSURL URLWithString:regString];
+        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+        NSData *urlData;
+        NSURLResponse *response;
+        urlData = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:nil];
+        //////END DB REGISTRATION
+    }else if ( [self.btnConnect.titleLabel.text isEqualToString:@"Connected"]) {
+        // disconnect from the stream
         _sampleGraph.reset();
         [self.btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
-
+        
+        NSLog(@"Stream disconnected");
+        NSUserDefaults *sname = [NSUserDefaults standardUserDefaults];
+        strname = [sname stringForKey:@"sname"];
+        
+        
+        ////////DO DATABASE WORK -> drop from DB so user is no longer active
+        NSString *regString = [NSString stringWithFormat:@"http://%@:8888/project/changeActive.php?uuid=%@", urlString, [UIDevice currentDevice].identifierForVendor.UUIDString];
+        regString = [regString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL *url = [NSURL URLWithString:regString];
+       // NSLog(@"drop string is: %@", url);
+        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+        NSData *urlData;
+        NSURLResponse *response;
+        urlData = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:nil];
+        //////END DB STREAM ACTIVITY CHANGE
     }
     
 }
+
+-(void)fetchedData:(NSData *)responseData2 {
+    NSError* error;
+    if (responseData2 == nil) {
+        NSLog(@"NO DATA HAS BEEN FETCHED,ERROR");
+    }else{
+        NSString *JSONString = [[NSString alloc] initWithData:responseData2 encoding:NSUTF8StringEncoding];
+        SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+        NSError *error = nil;
+        dict = [jsonParser objectWithString:JSONString error:&error];
+        jsonData = [dict valueForKeyPath:@"streamers"];
+        NSLog(@"jsonData is: %@", [[jsonData objectAtIndex:1]objectForKey:@"url"]);
+        
+        
+    }
+}
+
 
 - (IBAction)btnSpinTouch:(id)sender {
     //reachability code to test for active server
