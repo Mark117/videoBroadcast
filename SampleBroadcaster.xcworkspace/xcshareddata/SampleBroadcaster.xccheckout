@@ -5,18 +5,28 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
+<<<<<<< HEAD
 	<string>5A22FD4C-0F4F-4D77-BB57-E01C56E0A791</string>
+=======
+	<string>B1776C46-2298-45F5-8676-505367CB8111</string>
+>>>>>>> 13847db7f88ed040483aea12c31b9215094f0bb6
 	<key>IDESourceControlProjectName</key>
 	<string>SampleBroadcaster</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+<<<<<<< HEAD
 		<key>D19027E7-C92C-46EA-8D6F-4CBF90803EF4</key>
 		<string>ssh://github.com/Mark117/videoBroadcast.git</string>
+=======
+		<key>1CFE370D-0D15-4E33-AC2A-EA93F992DD3B</key>
+		<string>http://github.com/Mark117/videoBroadcast.git</string>
+>>>>>>> 13847db7f88ed040483aea12c31b9215094f0bb6
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>SampleBroadcaster.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+<<<<<<< HEAD
 		<key>D19027E7-C92C-46EA-8D6F-4CBF90803EF4</key>
 		<string>..</string>
 	</dict>
@@ -26,15 +36,32 @@
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
 	<string>D19027E7-C92C-46EA-8D6F-4CBF90803EF4</string>
+=======
+		<key>1CFE370D-0D15-4E33-AC2A-EA93F992DD3B</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://github.com/Mark117/videoBroadcast.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1CFE370D-0D15-4E33-AC2A-EA93F992DD3B</string>
+>>>>>>> 13847db7f88ed040483aea12c31b9215094f0bb6
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+<<<<<<< HEAD
 			<string>D19027E7-C92C-46EA-8D6F-4CBF90803EF4</string>
 			<key>IDESourceControlWCCName</key>
 			<string>SampleBroadcaster</string>
+=======
+			<string>1CFE370D-0D15-4E33-AC2A-EA93F992DD3B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>videoBroadcast</string>
+>>>>>>> 13847db7f88ed040483aea12c31b9215094f0bb6
 		</dict>
 	</array>
 </dict>
