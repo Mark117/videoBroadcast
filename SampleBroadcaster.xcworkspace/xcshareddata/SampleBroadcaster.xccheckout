@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B1776C46-2298-45F5-8676-505367CB8111</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SampleBroadcaster</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1CFE370D-0D15-4E33-AC2A-EA93F992DD3B</key>
+		<string>http://github.com/Mark117/videoBroadcast.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SampleBroadcaster.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1CFE370D-0D15-4E33-AC2A-EA93F992DD3B</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://github.com/Mark117/videoBroadcast.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1CFE370D-0D15-4E33-AC2A-EA93F992DD3B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1CFE370D-0D15-4E33-AC2A-EA93F992DD3B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>videoBroadcast</string>
+		</dict>
+	</array>
+</dict>
+</plist>
