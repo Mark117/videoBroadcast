@@ -15,10 +15,17 @@
     NSMutableData *responseData;
     NSDictionary *dict;
     NSArray *jsonData;
-
+    NSDictionary *voteDict;
+    NSArray *jsonVoteData;
+    NSDictionary *typeDict;
+    NSArray *jsonVoteType;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *tb;
 @property(nonatomic, retain) NSArray * studentData;
+//@property(retain) NSArray *jsonData;
+@property (retain, nonatomic) IBOutlet UITableView *button;
+
+
 -(void) createData;
 @end

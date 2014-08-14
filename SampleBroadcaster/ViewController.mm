@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "SBJsonBase.h"
 #import "SBJsonParser.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ViewController () <GLKViewDelegate>
 {
@@ -38,7 +39,7 @@
     _spinning = false;
     
     NSUserDefaults *sURL = [NSUserDefaults standardUserDefaults];
-    [sURL setObject:@"192.168.1.41" forKey:@"sURL"];
+    [sURL setObject:@"192.168.1.16" forKey:@"sURL"];
     [sURL synchronize];
     
     NSUserDefaults *sname = [NSUserDefaults standardUserDefaults];
@@ -60,6 +61,8 @@
     [_btnConnect release];
     [_glkView release];
     [_btnSpin release];
+    [_button release];
+    [_imageView release];
     [super dealloc];
 }
 - (void) glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -82,6 +85,53 @@
     
     self.ciImage = nil;
 }
+- (UIImage*)screenshot
+{
+    // Create a graphics context with the target size
+    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
+    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
+    CGSize imageSize = [[UIScreen mainScreen] bounds].size;
+    if (NULL != UIGraphicsBeginImageContextWithOptions)
+        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+    else
+        UIGraphicsBeginImageContext(imageSize);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // Iterate over every window from back to front
+    for (UIWindow *window in [[UIApplication sharedApplication] windows])
+    {
+        if (![window respondsToSelector:@selector(screen)] || [window screen] == [UIScreen mainScreen])
+        {
+            // -renderInContext: renders in the coordinate space of the layer,
+            // so we must first apply the layer's geometry to the graphics context
+            CGContextSaveGState(context);
+            // Center the context around the window's anchor point
+            CGContextTranslateCTM(context, [window center].x, [window center].y);
+            // Apply the window's transform about the anchor point
+            CGContextConcatCTM(context, [window transform]);
+            // Offset by the portion of the bounds left of and above the anchor point
+            CGContextTranslateCTM(context,
+                                  -[window bounds].size.width * [[window layer] anchorPoint].x,
+                                  -[window bounds].size.height * [[window layer] anchorPoint].y);
+            
+            // Render the layer hierarchy to the current context
+            [[window layer] renderInContext:context];
+            
+            // Restore the context
+            CGContextRestoreGState(context);
+        }
+    }
+    
+    // Retrieve the screenshot image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+//    [_button setImage:image forState:UIControlStateNormal];
+    
+    return image;
+}
+
 - (IBAction)btnConnectTouch:(id)sender {
     NSUserDefaults *sURL = [NSUserDefaults standardUserDefaults];
     urlString = [sURL stringForKey:@"sURL"];
@@ -154,6 +204,7 @@
         int fps = 15;
         _sampleGraph->startRtmpSession([rtmpUrl UTF8String], scr_w, scr_h, bitrate /* video bitrate */, fps /* video fps */);
         
+        [self screenshot];
         ////////DO DATABASE WORK -> upload the sname, uuid, bitrate, fps, url, active, rating
         int active = 1;
         int rating = 0;
@@ -255,5 +306,17 @@
         CVPixelBufferUnlockBaseAddress(pb, 0);
 
     }
+}
+- (IBAction)onClick:(id)sender {
+    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, 0);
+    
+    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
+    
+    UIImage *copied = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    NSLog(@"image is: %@", copied);
+    //    [self screenshot];
+    [_imageView setImage:copied];
+    [_button setImage:copied forState:UIControlStateNormal];
 }
 @end

@@ -22,7 +22,6 @@
 		7265D602191994B80042DC3B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7265D601191994B80042DC3B /* XCTest.framework */; };
 		7265D603191994B80042DC3B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7265D5DF191994B80042DC3B /* Foundation.framework */; };
 		7265D604191994B80042DC3B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7265D5E3191994B80042DC3B /* UIKit.framework */; };
-		7265D6651919977B0042DC3B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7265D6641919977B0042DC3B /* AVFoundation.framework */; };
 		7265D667191997800042DC3B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7265D666191997800042DC3B /* AudioToolbox.framework */; };
 		7265D669191997840042DC3B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7265D668191997840042DC3B /* CFNetwork.framework */; };
 		7265D66B1919978E0042DC3B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7265D66A1919978E0042DC3B /* CoreMedia.framework */; };
@@ -33,6 +32,9 @@
 		F4166386198C46890049FEEF /* WatchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4166385198C46890049FEEF /* WatchTableViewCell.m */; };
 		F4A153CB196330AA00B319AF /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A153CA196330AA00B319AF /* StreamViewController.m */; };
 		F4A153CD1963310900B319AF /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A153CC1963310900B319AF /* MediaPlayer.framework */; };
+		F4B2698F199CD52B00B06F64 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7265D6641919977B0042DC3B /* AVFoundation.framework */; };
+		F4B26992199CD83200B06F64 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B26991199CD83200B06F64 /* SettingsViewController.m */; };
+		F4B26994199CE31100B06F64 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B26993199CE31100B06F64 /* QuartzCore.framework */; };
 		F4E3E52819967042005C50BE /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E3E52319966DBC005C50BE /* SBJsonBase.m */; };
 		F4E3E52919967042005C50BE /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E3E52519966DBC005C50BE /* SBJsonParser.m */; };
 		F4E3E52A19967042005C50BE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E3E52719966DBC005C50BE /* SBJsonWriter.m */; };
@@ -88,6 +90,9 @@
 		F4A153C9196330AA00B319AF /* StreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamViewController.h; sourceTree = "<group>"; };
 		F4A153CA196330AA00B319AF /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamViewController.m; sourceTree = "<group>"; };
 		F4A153CC1963310900B319AF /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		F4B26990199CD83200B06F64 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		F4B26991199CD83200B06F64 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		F4B26993199CE31100B06F64 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F4E3E51E19966DBC005C50BE /* NSObject+SBJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		F4E3E51F19966DBC005C50BE /* NSObject+SBJSON.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
 		F4E3E52019966DBC005C50BE /* NSString+SBJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
@@ -109,6 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4B26994199CE31100B06F64 /* QuartzCore.framework in Frameworks */,
+				F4B2698F199CD52B00B06F64 /* AVFoundation.framework in Frameworks */,
 				F4A153CD1963310900B319AF /* MediaPlayer.framework in Frameworks */,
 				1A7B35651942542400AB5FD6 /* GLKit.framework in Frameworks */,
 				1A7B35671942564600AB5FD6 /* libPods.a in Frameworks */,
@@ -117,7 +124,6 @@
 				7265D66B1919978E0042DC3B /* CoreMedia.framework in Frameworks */,
 				7265D669191997840042DC3B /* CFNetwork.framework in Frameworks */,
 				7265D667191997800042DC3B /* AudioToolbox.framework in Frameworks */,
-				7265D6651919977B0042DC3B /* AVFoundation.framework in Frameworks */,
 				7265D5E2191994B80042DC3B /* CoreGraphics.framework in Frameworks */,
 				7265D5E4191994B80042DC3B /* UIKit.framework in Frameworks */,
 				7265D5E0191994B80042DC3B /* Foundation.framework in Frameworks */,
@@ -159,6 +165,7 @@
 		7265D5DE191994B80042DC3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4B26993199CE31100B06F64 /* QuartzCore.framework */,
 				F4E3E51D19966DBC005C50BE /* JSON */,
 				F4A153CC1963310900B319AF /* MediaPlayer.framework */,
 				1A7B35661942564600AB5FD6 /* libPods.a */,
@@ -188,6 +195,8 @@
 				7265D5EE191994B80042DC3B /* AppDelegate.h */,
 				7265D5EF191994B80042DC3B /* AppDelegate.m */,
 				7265D5F1191994B80042DC3B /* Main_iPhone.storyboard */,
+				F4B26990199CD83200B06F64 /* SettingsViewController.h */,
+				F4B26991199CD83200B06F64 /* SettingsViewController.m */,
 				F4A153C9196330AA00B319AF /* StreamViewController.h */,
 				F4A153CA196330AA00B319AF /* StreamViewController.m */,
 				F4E6D9E51987F189006BF778 /* MainTableViewController.h */,
@@ -382,6 +391,7 @@
 				F4E6D9EC19886279006BF778 /* Person.m in Sources */,
 				7265D5F0191994B80042DC3B /* AppDelegate.m in Sources */,
 				7265D5EC191994B80042DC3B /* main.m in Sources */,
+				F4B26992199CD83200B06F64 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

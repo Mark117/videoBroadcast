@@ -28,5 +28,8 @@
 @property (retain, nonatomic) IBOutlet UIButton *btnConnect;
 - (IBAction)btnConnectTouch:(id)sender;
 - (IBAction)btnSpinTouch:(id)sender;
+@property (retain, nonatomic) IBOutlet UIButton *button;
+- (IBAction)onClick:(id)sender;
+@property (retain, nonatomic) IBOutlet UIImageView *imageView;
 
 @end

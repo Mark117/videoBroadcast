@@ -13,7 +13,7 @@
 #include <videocore/transforms/ITransform.hpp>
 
 namespace videocore { namespace sample {
-
+    
     class SampleImageTransform : public ITransform
     {
     public:

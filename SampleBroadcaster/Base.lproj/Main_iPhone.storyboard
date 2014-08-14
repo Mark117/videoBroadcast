@@ -13,7 +13,7 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" enableSetNeedsDisplay="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZs-nc-de5">
@@ -42,6 +42,20 @@
                                     <action selector="btnConnectTouch:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="U36-yX-cp8"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qhZ-Pv-Slk">
+                                <rect key="frame" x="95" y="414" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="eZY-m4-KFo"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HZw-KQ-8f1">
+                                <rect key="frame" x="163" y="369" width="45" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -50,7 +64,9 @@
                     <connections>
                         <outlet property="btnConnect" destination="sJT-7B-7CU" id="aEk-8U-7aM"/>
                         <outlet property="btnSpin" destination="qKA-dI-fgl" id="a5I-3z-ZNq"/>
+                        <outlet property="button" destination="qhZ-Pv-Slk" id="Qrf-y5-OS0"/>
                         <outlet property="glkView" destination="iZs-nc-de5" id="C7j-G4-1NB"/>
+                        <outlet property="imageView" destination="HZw-KQ-8f1" id="HNP-yT-BGG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -62,7 +78,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="watch" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rcX-YE-2HJ" customClass="MainTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="116" sectionHeaderHeight="22" sectionFooterHeight="22" id="VmS-sq-Xxt">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -131,6 +147,7 @@
                     <tabBarItem key="tabBarItem" title="Watch" id="ids-3T-eeB"/>
                     <navigationItem key="navigationItem" id="4l8-XW-gtD"/>
                     <connections>
+                        <outlet property="button" destination="VmS-sq-Xxt" id="yKQ-lL-fri"/>
                         <outlet property="tb" destination="VmS-sq-Xxt" id="NCt-Fg-ROx"/>
                     </connections>
                 </tableViewController>
@@ -147,7 +164,7 @@
                         <viewControllerLayoutGuide type="bottom" id="AMB-Kw-qCi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Emt-OY-NgK">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stream settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfz-6G-2vn">
@@ -175,7 +192,7 @@
                         <viewControllerLayoutGuide type="bottom" id="CmY-gA-6Ls"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lru-vc-9QM">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View Selected Stream" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I21-HX-C1T">
@@ -193,16 +210,16 @@
             </objects>
             <point key="canvasLocation" x="1423" y="-546"/>
         </scene>
-        <!--View Controller - Settings-->
+        <!--Settings View Controller - Settings-->
         <scene sceneID="nQy-tm-ud4">
             <objects>
-                <viewController id="v0C-3d-AYa" sceneMemberID="viewController">
+                <viewController id="v0C-3d-AYa" customClass="SettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZMo-co-uAb"/>
                         <viewControllerLayoutGuide type="bottom" id="Dc6-Q1-pkg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0mx-d0-WGf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stream settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYW-qv-gLS">
@@ -245,11 +262,26 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clP-H9-QnY">
+                                <rect key="frame" x="155" y="369" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZXZ-fs-DyM">
+                                <rect key="frame" x="128" y="253" width="160" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" id="VMz-H2-cSO"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="button" destination="clP-H9-QnY" id="9CF-Pc-ykX"/>
+                        <outlet property="thumbnail" destination="ZXZ-fs-DyM" id="kaO-hC-0We"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmY-Po-sWG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -277,7 +309,7 @@
             <objects>
                 <tabBarController definesPresentationContext="YES" id="gys-FS-RKs" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="kRm-Qh-kvT"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="vl1-2s-l7t">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -301,6 +333,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
 </document>
