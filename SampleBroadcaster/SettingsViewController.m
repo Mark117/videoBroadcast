@@ -43,6 +43,8 @@
 }
 -(void)generateImage
 {
+    ///test
+    
     NSURL *url = [NSURL URLWithString:@"http://192.168.1.16:1935/live2/myStream/playlist.m3u8"];
 //    AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:url options:nil];
 //    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
